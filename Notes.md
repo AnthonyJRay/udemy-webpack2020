@@ -359,3 +359,21 @@ We completely removed _Terser_ from webpack because in neither case would we nee
 In the _Development_ config file, we also removed CSS minification also, to help us while we build out our applications.
 
 ## Webpack Dev Server
+
+```
+npm install webpack-dev-server --save-dev
+```
+
+You can add the _devServer:_ option below the _mode_ option. The _devServer_ takes an Object, and inside of there you can specify some options to your _devServer_
+
+The first option is _contentBase:_ and it should point to the _dist_ folder as an _absolute path._
+
+_You should be able to copy the **path.resolve** from the **path** option, and paste it into the **contentBase** option_
+
+---
+
+The second option should be _index: ''_ which just takes the name of the html file. _index.html_
+
+---
+
+The third option is _port:_ which just specifies a port the dev server should run on. _3000, 8000, 8080, 9000, pick a number_
