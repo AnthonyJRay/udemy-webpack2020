@@ -288,3 +288,74 @@ When webpack builds your application with the _HTMLWebpackPlugin_ installed, it 
 Simply change the _publicPath_ option in the webpack.config to empty.
 
 Typically you may at this point have a HTML file inside of the root directory. Because webpack is now generating the HTML file in the dist folder, the root copy is no longer needed and may be removed.
+
+## Customizing Generated HTML Files
+
+Inside the HTML plugin, you can specify _options_ inside an Object. Some of these options can include,
+
+- Custom Filename
+- Title
+- Meta data / Description
+
+You can find a full list of options on the plugins Github page.
+
+## Integrating "Handlebars"
+
+You can use a _template engine_ to create templates for generating HTML files. Some of the engines include,
+
+- pug
+- ejs
+- underscore
+- handlebars
+- html-loader
+
+For this course particular workspace, we are using _Handlebars_
+
+_Handlebars_ is a _template engine_ that allows you to separate the _business logic_ from the _presentation_
+
+If/when you find yourself generating HTML inside of your JavaScript, then you probably need some kind of _Template Engine_
+
+With a templating engine, you can use the variables in webpack to assign values inside of your HTML template.
+
+With handlebars, you create your HTML files with an _".hbs"_ file extension.
+
+Inside your HTML plugin, you need to specify the path to the new _template_ html file you plan to use.
+
+Also you must create a new _rule_ to inform webpack how to _handle_ the new file extension. For handlebars, you use _handlebars-loader_
+
+Once _handlebars_ is installed and setup, you will notice it will take your _.hbs_ file, and spit out an _index.html_ file after the build process in the dist folder.
+
+Note: When trying to use the webpack.config variables setup inside your HtmlWebpackPlugin, they must be inserted inside of double curly braces ( {{ insert.variable.here }} )
+
+You also must use dot notation to access these properties since they are written inside of Object literals inside the webpack configuration.
+
+#### More Plugins
+
+You can find a full list of additional plugins on the official Webpack page.
+
+## Production vs Development Builds
+
+Usually _production_ builds require a different setup than _development_ builds.
+
+In _production,_ you generally want your website or application to be as _fast as possible_ aswell as your bundles to be as _small as possible_
+
+In _development,_ you generally want to see additional information inside your JavaScript. For example, _source maps_
+
+## Mode
+
+_production_ mode comes with a long list of plugins added by default. Plugins like _Terser_
+
+When running your code in the browser, and look inside the sources tab. You will see your files are minified. This can make it hard to read and debug, as you build out your application.
+
+In _development_ mode, webpack won't minify the code. Therefore you can debug and edit your code, faster and much easier.
+
+The reason for this is called _source maps._
+
+## Managing Webpack Config for Prod/Dev use cases
+
+In this module we created 2 different npm scripts for a _Development_ build process and a _Production_ build process.
+We completely removed _Terser_ from webpack because in neither case would we need it. In production, the production mode includes this by default. In development, it's better to not have your code minified while you develop your application.
+
+In the _Development_ config file, we also removed CSS minification also, to help us while we build out our applications.
+
+## Webpack Dev Server
