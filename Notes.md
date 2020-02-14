@@ -227,3 +227,11 @@ The biggest problem with this approach is that the _bundle_ file can become much
 An easy solution to this problem is to seperate our CSS into a separate file that will be generated alongside our JavaScript bundle.
 
 This way we can have two bundles instead of one big one. It will decrease the overall size of the JavaScript Bundle making it much faster to download. Also, this allows us to load several files in parallel, making the overall experience better.
+
+The name of the plugin used to achieve this is _mini-css-extract-plugin_
+
+Once added to the plugins, you can pass an object as an argument, with some properties. Like a _filename_ property, to specify a name for the bundled css file.
+
+Don't forget to update the rules for _css_ and _scss_ files. Simply replace _style-loader_ with **MiniCssExtractPlugin.loader**
+
+## Browser Caching
