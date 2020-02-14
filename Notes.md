@@ -235,3 +235,56 @@ Once added to the plugins, you can pass an object as an argument, with some prop
 Don't forget to update the rules for _css_ and _scss_ files. Simply replace _style-loader_ with **MiniCssExtractPlugin.loader**
 
 ## Browser Caching
+
+Each time a user reloads the page, the browser must re-download all the assets (javascript, css, images, ect.) to be displayed again.
+
+This can become an issue, especially for mobile devices on slower connections.
+
+Fortunately you can aleviate some of this with _Browser Caching_
+
+If the page, or a part of the page didn't change, between reloads, the browser will _save_ it, or _cache_ it.
+
+That way the user will only need to download any assets or code that was changed from the previous page load. Saving them from downloading uneccessary files.
+
+_However_ if the browser is always taking the file from _cache_ the user will never get the newer version if there is one. Therefore you need a mechanism for updating the cache.
+
+One of the most popular approaches is creating a new file with a new name each time you make a change. Browsers remember files by name. Therefore if the name changes, browsers will download the new version.
+
+One of the best practices is to add a _MD5 Hash_ to the name of the file.
+
+For example, say you changed some styles in your CSS file. Webpack would generate a new name for the CSS file but still use the same JavaScript files with their original name stored in the _cache_
+
+For this to work, you simply add **[contenthash]** to the _filename_, of the _output_, in _webpack.config_.
+
+```
+module-exports = {
+    entry: './src/index.js',
+    output{
+        filename: 'bundle.[contenthash].js',
+    }
+}
+```
+
+Don't forget to also add the _contenthash_ to your CSS files as well.
+
+Keep in mind that each time you save and build your application, you will create a new file with a new _MD5 Hash_
+
+## Cleaning Dist Folder
+
+Now we will need to implement a way to clean out those old files, before generating new bundles. Otherwise the _/dist_ folder will fill up with each older version.
+
+Fortunately, Webpack has a plugin for this aswell! It is called _CleanWebpackPlugin_
+
+This plugin will remove all the files in the dist folder each time you run webpack, before generating new ones.
+
+_REMEMBER_ Your HTML file/files will break! You need to change references of your JavaScript and CSS files with their new MD5 Hashes.
+
+## Generating HTML Files Automatically
+
+You can also install and use _HTMLWebpackPlugin_ to update your HTML files automatically.
+
+When webpack builds your application with the _HTMLWebpackPlugin_ installed, it will generate a new html file in the output, or _dist_ folder. You will notice that the references are prefixed with _dist/_ still. This is no longer needed as the HTML file now resides inside the same folder as the JavaScript and CSS files.
+
+Simply change the _publicPath_ option in the webpack.config to empty.
+
+Typically you may at this point have a HTML file inside of the root directory. Because webpack is now generating the HTML file in the dist folder, the root copy is no longer needed and may be removed.
