@@ -377,3 +377,5 @@ The second option should be _index: ''_ which just takes the name of the html fi
 ---
 
 The third option is _port:_ which just specifies a port the dev server should run on. _3000, 8000, 8080, 9000, pick a number_
+
+## Multiple Page Applications
